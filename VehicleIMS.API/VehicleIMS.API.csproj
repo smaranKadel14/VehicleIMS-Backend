@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\VehicleIMS.Application\VehicleIMS.Application.csproj" />
     <ProjectReference Include="..\VehicleIMS.Infrastructure\VehicleIMS.Infrastructure.csproj" />
   </ItemGroup>
