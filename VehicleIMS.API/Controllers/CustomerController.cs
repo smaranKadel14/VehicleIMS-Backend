@@ -1,73 +1,67 @@
 using Microsoft.AspNetCore.Mvc;
-using VehicleIMS.Application.DTOs;
-using VehicleIMS.Application.Services;
+using VehicleIMS.Application.Customers.DTOs;
+using VehicleIMS.Application.Customers.Interfaces;
 
-namespace VehicleIMS.API.Controllers
+namespace VehicleIMS.API.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class CustomerController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CustomerController : ControllerBase
+    private readonly ICustomerService _customerService;
+
+    public CustomerController(ICustomerService customerService)
     {
-        private readonly ICustomerService _service;
+        _customerService = customerService;
+    }
 
-        public CustomerController(ICustomerService service)
+    [HttpPost("register")]
+    public async Task<ActionResult<CustomerResponse>> RegisterCustomer(
+        [FromBody] CreateCustomerWithVehicleRequestDTO request,
+        CancellationToken cancellationToken)
+    {
+        try
         {
-            _service = service;
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterCustomerDto dto)
-        {
-            var result = await _service.RegisterAsync(dto);
-
-            if (!result.Success)
-                return Conflict(new { message = result.Message });
+            var customer = await _customerService.RegisterCustomerWithVehicleAsync(request, cancellationToken);
 
             return CreatedAtAction(
-                nameof(GetVehicles),
-                new { customerId = result.CustomerId },
-                new
-                {
-                    message = result.Message,
-                    customerId = result.CustomerId
-                });
+                nameof(GetCustomerById),
+                new { id = customer.Id },
+                customer);
         }
-
-        [HttpPut("{customerId}/profile")]
-        public async Task<IActionResult> UpdateProfile(int customerId, [FromBody] UpdateProfileDto dto)
+        catch (InvalidOperationException ex)
         {
-            var result = await _service.UpdateProfileAsync(customerId, dto);
-            if (result.Contains("not found"))
-                return NotFound(new { message = result });
-
-            return Ok(new { message = result });
+            return BadRequest(new { message = ex.Message });
         }
+    }
 
-        [HttpGet("{customerId}/vehicles")]
-        public async Task<IActionResult> GetVehicles(int customerId)
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<CustomerResponse>> GetCustomerById(
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var customer = await _customerService.GetCustomerByIdAsync(id, cancellationToken);
+
+        if (customer is null)
         {
-            var vehicles = await _service.GetVehiclesAsync(customerId);
-            return Ok(vehicles);
+            return NotFound(new { message = "Customer not found." });
         }
 
-        [HttpPost("{customerId}/vehicles")]
-        public async Task<IActionResult> AddVehicle(int customerId, [FromBody] VehicleDto dto)
+        return Ok(customer);
+    }
+
+    [HttpGet("{id:int}/history")]
+    public async Task<ActionResult<CustomerHistoryResponse>> GetCustomerHistory(
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var history = await _customerService.GetCustomerHistoryAsync(id, cancellationToken);
+
+        if (history is null)
         {
-            var result = await _service.AddVehicleAsync(customerId, dto);
-            if (result.Contains("not found"))
-                return NotFound(new { message = result });
-
-            return Ok(new { message = result });
+            return NotFound(new { message = "Customer not found." });
         }
 
-        [HttpPut("vehicles/{vehicleId}")]
-        public async Task<IActionResult> UpdateVehicle(int vehicleId, [FromBody] VehicleDto dto)
-        {
-            var result = await _service.UpdateVehicleAsync(vehicleId, dto);
-            if (result.Contains("not found"))
-                return NotFound(new { message = result });
-
-            return Ok(new { message = result });
-        }
+        return Ok(history);
     }
 }
