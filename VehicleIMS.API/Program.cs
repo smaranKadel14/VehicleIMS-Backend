@@ -24,6 +24,10 @@ builder.Services.AddScoped<IPartRequestRepository, PartRequestRepository>();
 builder.Services.AddScoped<IPartRequestService, PartRequestService>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IPartService, PartService>();
+builder.Services.AddScoped<ISalesService, SalesService>();
+builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
