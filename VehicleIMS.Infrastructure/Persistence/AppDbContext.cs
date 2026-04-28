@@ -19,6 +19,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<SalesInvoiceItem> SalesInvoiceItems { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Part> Parts { get; set; }
+    public DbSet<PartRequest> PartRequests { get; set; }
+    public DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,3 +36,4 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<Part>().ToTable("Parts");
     }
 }
+

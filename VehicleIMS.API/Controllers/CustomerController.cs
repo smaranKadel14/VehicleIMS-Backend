@@ -15,7 +15,7 @@ public class CustomerController : ControllerBase
         _customerService = customerService;
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult<CustomerResponse>> RegisterCustomer(
         [FromBody] CreateCustomerWithVehicleRequestDTO request,
         CancellationToken cancellationToken)
@@ -23,7 +23,11 @@ public class CustomerController : ControllerBase
         try
         {
             var customer = await _customerService.RegisterCustomerWithVehicleAsync(request, cancellationToken);
-            return CreatedAtAction(nameof(GetCustomerById), new { id = customer.Id }, customer);
+
+            return CreatedAtAction(
+                nameof(GetCustomerById),
+                new { id = customer.Id },
+                customer);
         }
         catch (InvalidOperationException ex)
         {
