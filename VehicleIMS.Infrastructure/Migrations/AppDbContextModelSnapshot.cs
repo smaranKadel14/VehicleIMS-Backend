@@ -55,7 +55,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Appointment");
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Customer", b =>
@@ -202,7 +202,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("PartId");
 
-                    b.ToTable("PartRequest");
+                    b.ToTable("PartRequests");
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.PurchaseInvoice", b =>
@@ -294,7 +294,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("PartId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.SalesInvoice", b =>
@@ -428,7 +428,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Vendor", b =>
