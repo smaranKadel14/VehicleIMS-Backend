@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using VehicleIMS.Application.Customers.Interfaces;
 using VehicleIMS.Application.Customers.Services;
 using VehicleIMS.Application.Interfaces;
+using VehicleIMS.Application.Interfaces.IServices;
 using VehicleIMS.Application.Services;
 using VehicleIMS.Infrastructure.Persistence;
 using VehicleIMS.Infrastructure.Repositories;
@@ -17,7 +18,6 @@ builder.Services.AddScoped<IAppDbContext>(provider => provider.GetRequiredServic
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IPartRequestRepository, PartRequestRepository>();

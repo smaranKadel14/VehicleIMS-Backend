@@ -1,5 +1,6 @@
 using VehicleIMS.Application.DTOs;
 using VehicleIMS.Application.Interfaces;
+using VehicleIMS.Application.Interfaces.IServices;
 using VehicleIMS.Domain.Models;
 
 namespace VehicleIMS.Application.Services

@@ -1,6 +1,6 @@
 using VehicleIMS.Application.DTOs;
 
-namespace VehicleIMS.Application.Services
+namespace VehicleIMS.Application.Interfaces.IServices
 {
     public interface IReviewService
     {

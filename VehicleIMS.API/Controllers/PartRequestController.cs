@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using VehicleIMS.Application.DTOs;
-using VehicleIMS.Application.Services;
+using VehicleIMS.Application.Interfaces.IServices;
 
 namespace VehicleIMS.API.Controllers
 {
@@ -12,7 +12,7 @@ namespace VehicleIMS.API.Controllers
         public PartRequestController(IPartRequestService service) { _service = service; }
 
         [HttpPost("{customerId}")]
-        public async Task<IActionResult> Request(int customerId, [FromBody] PartRequestDto dto)
+        public async Task<IActionResult> SubmitPartRequest(int customerId, [FromBody] PartRequestDto dto)
         {
             var result = await _service.RequestAsync(customerId, dto);
             return Ok(new { message = result });
