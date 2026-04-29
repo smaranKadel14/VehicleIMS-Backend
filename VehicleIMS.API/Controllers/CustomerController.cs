@@ -64,4 +64,21 @@ public class CustomerController : ControllerBase
 
         return Ok(history);
     }
+    // GET /api/customer/search?Query=jonathan&SearchType=Name&Status=Active&SortBy=Name
+    // GET /api/customer/search?Query=KAL-1234&SearchType=Vehicle
+    // GET /api/customer/search?Query=555&SearchType=Phone
+    // GET /api/customer/search?Query=1&SearchType=ID
+    [HttpGet("search")]
+    public async Task<ActionResult<List<CustomerResponse>>> SearchCustomers(
+        [FromQuery] string? query,
+        [FromQuery] string searchType = "All",
+        [FromQuery] string status = "All",
+        [FromQuery] string sortBy = "Name",
+        CancellationToken cancellationToken = default)
+    {
+        var results = await _customerService.SearchCustomersAsync(
+            query, searchType, status, sortBy, cancellationToken);
+        return Ok(results);
+    }
+ 
 }
