@@ -13,8 +13,12 @@ public interface IAppDbContext
     DbSet<Appointment> Appointments { get; }
     DbSet<SalesInvoice> SalesInvoices { get; }
     DbSet<SalesInvoiceItem> SalesInvoiceItems { get; }
+    DbSet<PurchaseInvoice> PurchaseInvoices { get; }
+    DbSet<PurchaseInvoiceItem> PurchaseInvoiceItems { get; }
     DbSet<Vendor> Vendors { get; }
     DbSet<Part> Parts { get; }
-    DbSet<Staff> Staff { get; } 
+    DbSet<Staff> Staff { get; }
+    DbSet<PartRequest> PartRequests { get; }
+    DbSet<Review> Reviews { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

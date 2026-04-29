@@ -32,6 +32,7 @@ namespace VehicleIMS.Infrastructure.Repositories
 
             // Reload with navigation properties
             return await _context.SalesInvoices
+                .Include(i => i.Customer)
                 .Include(i => i.SalesInvoiceItems)
                     .ThenInclude(i => i.Part)
                 .FirstAsync(i => i.Id == invoice.Id);
@@ -39,18 +40,21 @@ namespace VehicleIMS.Infrastructure.Repositories
 
         public async Task<SalesInvoice?> GetByIdAsync(int id) =>
             await _context.SalesInvoices
+                .Include(i => i.Customer)
                 .Include(i => i.SalesInvoiceItems)
                     .ThenInclude(i => i.Part)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
         public async Task<IEnumerable<SalesInvoice>> GetAllAsync() =>
             await _context.SalesInvoices
+                .Include(i => i.Customer)
                 .Include(i => i.SalesInvoiceItems)
                     .ThenInclude(i => i.Part)
                 .ToListAsync();
 
         public async Task<IEnumerable<SalesInvoice>> GetByCustomerIdAsync(int customerId) =>
             await _context.SalesInvoices
+                .Include(i => i.Customer)
                 .Include(i => i.SalesInvoiceItems)
                     .ThenInclude(i => i.Part)
                 .Where(i => i.CustomerId == customerId)

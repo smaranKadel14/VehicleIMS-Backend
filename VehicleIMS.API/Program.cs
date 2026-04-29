@@ -29,7 +29,10 @@ builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<ISalesInvoiceRepository, SalesInvoiceRepository>();
 builder.Services.AddScoped<ISalesInvoiceService, SalesInvoiceService>();
-
+builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IPartService, PartService>();
+builder.Services.AddScoped<ISalesService, SalesService>();
+builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 var app = builder.Build();
 
 app.UseSwagger();

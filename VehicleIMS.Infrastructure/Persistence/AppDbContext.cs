@@ -17,6 +17,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<SalesInvoice> SalesInvoices { get; set; }
     public DbSet<SalesInvoiceItem> SalesInvoiceItems { get; set; }
+    public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
+    public DbSet<PurchaseInvoiceItem> PurchaseInvoiceItems { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Part> Parts { get; set; }
     public DbSet<PartRequest> PartRequests { get; set; }
@@ -29,13 +31,17 @@ public class AppDbContext : DbContext, IAppDbContext
 
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<Customer>().ToTable("Customers");
-        modelBuilder.Entity<Vehicle>().ToTable("Vehicle");
-        modelBuilder.Entity<Appointment>().ToTable("Appointment");
-        modelBuilder.Entity<SalesInvoice>().ToTable("SalesInvoice");
-        modelBuilder.Entity<SalesInvoiceItem>().ToTable("SalesInvoiceItem");
+        modelBuilder.Entity<Vehicle>().ToTable("Vehicles");
+        modelBuilder.Entity<Appointment>().ToTable("Appointments");
+        modelBuilder.Entity<SalesInvoice>().ToTable("SalesInvoices");
+        modelBuilder.Entity<SalesInvoiceItem>().ToTable("SalesInvoiceItems");
+        modelBuilder.Entity<PurchaseInvoice>().ToTable("PurchaseInvoices");
+        modelBuilder.Entity<PurchaseInvoiceItem>().ToTable("PurchaseInvoiceItems");
         modelBuilder.Entity<Vendor>().ToTable("Vendors");
         modelBuilder.Entity<Part>().ToTable("Parts");
         modelBuilder.Entity<Staff>().ToTable("Staff");
+        modelBuilder.Entity<PartRequest>().ToTable("PartRequests");
+        modelBuilder.Entity<Review>().ToTable("Reviews");
     }
 }
 

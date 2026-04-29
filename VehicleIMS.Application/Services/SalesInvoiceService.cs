@@ -74,20 +74,32 @@ namespace VehicleIMS.Application.Services
             return invoices.Select(MapToResponse);
         }
 
-        private static SalesInvoiceResponse MapToResponse(SalesInvoice invoice) => new SalesInvoiceResponse
+        private static SalesInvoiceResponse MapToResponse(SalesInvoice invoice)
         {
-            Id = invoice.Id,
-            InvoiceNumber = invoice.InvoiceNumber,
-            Date = invoice.Date,
-            TotalAmount = invoice.TotalAmount,
-            CustomerId = invoice.CustomerId,
-            Items = invoice.SalesInvoiceItems.Select(i => new SalesInvoiceItemResponse
+            var items = invoice.SalesInvoiceItems.Select(i => new SalesInvoiceItemResponse
             {
+                Id = i.Id,
                 PartId = i.PartId,
                 PartName = i.Part?.Name ?? string.Empty,
                 Quantity = i.Quantity,
                 UnitPrice = i.UnitPrice
-            }).ToList()
-        };
+            }).ToList();
+
+            var subTotal = items.Sum(i => i.TotalPrice);
+
+            return new SalesInvoiceResponse
+            {
+                Id = invoice.Id,
+                InvoiceNumber = invoice.InvoiceNumber,
+                Date = invoice.Date,
+                CustomerId = invoice.CustomerId,
+                CustomerName = invoice.Customer?.FirstName + " " + invoice.Customer?.LastName,
+                SubTotal = subTotal,
+                DiscountPercentage = 0,
+                DiscountAmount = 0,
+                FinalTotal = subTotal,
+                Items = items
+            };
+        }
     }
 }
