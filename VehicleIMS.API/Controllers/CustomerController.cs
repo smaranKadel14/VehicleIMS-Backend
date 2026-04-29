@@ -23,7 +23,7 @@ public class CustomerController : ControllerBase
         try
         {
             var customer = await _customerService.RegisterCustomerWithVehicleAsync(request, cancellationToken);
-            return CreatedAtAction(nameof(GetCustomerById), new { id = customer.Id }, customer);
+            return StatusCode(StatusCodes.Status201Created, customer);
         }
         catch (InvalidOperationException ex)
         {
