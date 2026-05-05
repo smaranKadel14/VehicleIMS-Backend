@@ -10,5 +10,6 @@ namespace VehicleIMS.Application.Interfaces.IServices
         Task<SalesInvoiceResponse> CreateSalesInvoiceAsync(CreateSalesInvoiceRequest request, CancellationToken cancellationToken = default);
         Task<SalesInvoiceResponse?> GetSalesInvoiceByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<List<SalesInvoiceResponse>> GetAllSalesInvoicesAsync(CancellationToken cancellationToken = default);
+        Task<SendInvoiceEmailResponse> SendInvoiceEmailAsync(int id, SendInvoiceEmailRequest request, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using VehicleIMS.Application.DTOs;
@@ -37,6 +39,24 @@ namespace VehicleIMS.API.Controllers
         {
             var result = await _salesService.GetAllSalesInvoicesAsync(cancellationToken);
             return Ok(result);
+        }
+        
+        [HttpPost("{id}/send-email")]
+        public async Task<IActionResult> SendInvoiceEmail(int id, [FromBody] SendInvoiceEmailRequest request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var result = await _salesService.SendInvoiceEmailAsync(id, request, cancellationToken);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
