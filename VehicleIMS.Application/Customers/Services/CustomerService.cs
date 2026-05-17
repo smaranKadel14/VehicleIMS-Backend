@@ -14,6 +14,67 @@ public class CustomerService : ICustomerService
         _context = context;
     }
 
+    public async Task<CustomerResponse> RegisterCustomerWithVehicleAsync(
+        CreateCustomerWithVehicleRequestDTO request,
+        CancellationToken cancellationToken = default)
+    {
+        var email = request.Email.Trim();
+        var username = request.Username.Trim();
+        var phone = request.Phone.Trim();
+        var vin = request.VIN.Trim().ToUpperInvariant();
+        var licensePlate = request.LicensePlate.Trim().ToUpperInvariant();
+
+        if (await _context.Users.AnyAsync(u => u.Email == email || u.Username == username, cancellationToken))
+        {
+            throw new InvalidOperationException("A user with the same email or username already exists.");
+        }
+
+        if (await _context.Customers.AnyAsync(c => c.Phone == phone || c.Email == email, cancellationToken))
+        {
+            throw new InvalidOperationException("A customer with the same phone or email already exists.");
+        }
+
+        if (await _context.Vehicles.AnyAsync(v => v.VIN == vin || v.LicensePlate == licensePlate, cancellationToken))
+        {
+            throw new InvalidOperationException("A vehicle with the same VIN or license plate already exists.");
+        }
+
+        var user = new User
+        {
+            Username = username,
+            Email = email,
+            PasswordHash = request.PasswordHash.Trim(),
+            Role = "Customer"
+        };
+
+        var customer = new Customer
+        {
+            FirstName = request.FirstName.Trim(),
+            LastName = request.LastName.Trim(),
+            Email = email,
+            Phone = phone,
+            Address = request.Address.Trim(),
+            User = user
+        };
+
+        var vehicle = new Vehicle
+        {
+            Make = request.Make.Trim(),
+            Model = request.Model.Trim(),
+            Year = request.Year,
+            VIN = vin,
+            LicensePlate = licensePlate,
+            Customer = customer
+        };
+
+        customer.Vehicles.Add(vehicle);
+
+        _context.Customers.Add(customer);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return MapCustomer(customer);
+    }
+
     public async Task<CustomerResponse?> GetCustomerByIdAsync(
         int customerId,
         CancellationToken cancellationToken = default)

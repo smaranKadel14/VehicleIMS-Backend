@@ -17,7 +17,6 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<SalesInvoice> SalesInvoices { get; set; }
     public DbSet<SalesInvoiceItem> SalesInvoiceItems { get; set; }
-
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Part> Parts { get; set; }
 
