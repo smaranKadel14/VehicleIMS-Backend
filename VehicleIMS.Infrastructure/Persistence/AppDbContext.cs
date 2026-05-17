@@ -14,6 +14,9 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<SalesInvoice> SalesInvoices { get; set; }
+    public DbSet<SalesInvoiceItem> SalesInvoiceItems { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Part> Parts { get; set; }
 
@@ -23,7 +26,10 @@ public class AppDbContext : DbContext, IAppDbContext
 
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<Customer>().ToTable("Customers");
-        modelBuilder.Entity<Vehicle>().ToTable("Vehicle");
+        modelBuilder.Entity<Vehicle>().ToTable("Vehicles");
+        modelBuilder.Entity<Appointment>().ToTable("Appointments");
+        modelBuilder.Entity<SalesInvoice>().ToTable("SalesInvoices");
+        modelBuilder.Entity<SalesInvoiceItem>().ToTable("SalesInvoiceItems");
         modelBuilder.Entity<Vendor>().ToTable("Vendors");
         modelBuilder.Entity<Part>().ToTable("Parts");
     }
