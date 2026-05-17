@@ -1,6 +1,60 @@
 @VehicleIMS.API_HostAddress = http://localhost:5145
 
-GET {{VehicleIMS.API_HostAddress}}/weatherforecast/
-Accept: application/json
+### Register Customer
+POST {{VehicleIMS.API_HostAddress}}/api/Customer/register
+Content-Type: application/json
 
-###
+{
+  "username": "johndoe",
+  "email": "john@example.com",
+  "passwordHash": "securepassword123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "9876543210",
+  "address": "123 Main St",
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2022,
+  "vin": "VIN123456789",
+  "licensePlate": "BA-123"
+}
+
+### Create Vendor
+POST {{VehicleIMS.API_HostAddress}}/api/Vendor
+Content-Type: application/json
+
+{
+  "name": "Global Auto Parts",
+  "contactPerson": "Alice Smith",
+  "email": "alice@globalparts.com",
+  "phone": "555-0199",
+  "address": "456 Industrial Way"
+}
+
+### Create Part
+POST {{VehicleIMS.API_HostAddress}}/api/Parts
+Content-Type: application/json
+
+{
+  "name": "Brake Pad",
+  "description": "High performance ceramic pads",
+  "price": 3000,
+  "stockQuantity": 100,
+  "sku": "BP-001",
+  "vendorId": 1
+}
+
+### Create Sale (Loyalty Discount Test)
+POST {{VehicleIMS.API_HostAddress}}/api/Sales
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "items": [
+    {
+      "partId": 1,
+      "quantity": 2,
+      "unitPrice": 3000
+    }
+  ]
+}

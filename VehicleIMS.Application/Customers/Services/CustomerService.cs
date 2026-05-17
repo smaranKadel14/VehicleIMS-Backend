@@ -14,6 +14,19 @@ public class CustomerService : ICustomerService
         _context = context;
     }
 
+    public async Task<CustomerResponse?> GetCustomerByIdAsync(
+        int customerId,
+        CancellationToken cancellationToken = default)
+    {
+        var customer = await _context.Customers
+            .AsNoTracking()
+            .Include(c => c.User)
+            .Include(c => c.Vehicles)
+            .FirstOrDefaultAsync(c => c.Id == customerId, cancellationToken);
+
+        return customer is null ? null : MapCustomer(customer);
+    }
+
     public async Task<CustomerHistoryResponse?> GetCustomerHistoryAsync(
         int customerId,
         CancellationToken cancellationToken = default)

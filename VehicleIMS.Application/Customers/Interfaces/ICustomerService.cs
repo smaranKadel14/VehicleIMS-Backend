@@ -6,6 +6,10 @@ namespace VehicleIMS.Application.Customers.Interfaces;
 
 public interface ICustomerService
 {
+    Task<CustomerResponse?> GetCustomerByIdAsync(
+        int customerId,
+        CancellationToken cancellationToken = default);
+
     Task<CustomerHistoryResponse?> GetCustomerHistoryAsync(
         int customerId,
         CancellationToken cancellationToken = default);
