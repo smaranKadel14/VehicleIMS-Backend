@@ -64,6 +64,7 @@ public class CustomerController : ControllerBase
 
         return Ok(history);
     }
+
     // GET /api/customer/search?Query=jonathan&SearchType=Name&Status=Active&SortBy=Name
     // GET /api/customer/search?Query=KAL-1234&SearchType=Vehicle
     // GET /api/customer/search?Query=555&SearchType=Phone
@@ -78,7 +79,7 @@ public class CustomerController : ControllerBase
     {
         var results = await _customerService.SearchCustomersAsync(
             query, searchType, status, sortBy, cancellationToken);
+
         return Ok(results);
     }
- 
 }

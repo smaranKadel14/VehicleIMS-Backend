@@ -23,7 +23,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Part> Parts { get; set; }
     public DbSet<PartRequest> PartRequests { get; set; }
     public DbSet<Review> Reviews { get; set; }
-    public DbSet<Staff> Staff { get; set; } 
+    public DbSet<Staff> Staff { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,9 +39,8 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<PurchaseInvoiceItem>().ToTable("PurchaseInvoiceItems");
         modelBuilder.Entity<Vendor>().ToTable("Vendors");
         modelBuilder.Entity<Part>().ToTable("Parts");
-        modelBuilder.Entity<Staff>().ToTable("Staff");
         modelBuilder.Entity<PartRequest>().ToTable("PartRequests");
         modelBuilder.Entity<Review>().ToTable("Reviews");
+        modelBuilder.Entity<Staff>().ToTable("Staff");
     }
 }
-
