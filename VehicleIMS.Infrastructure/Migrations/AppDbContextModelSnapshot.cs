@@ -55,7 +55,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Appointment");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Customer", b =>
@@ -98,7 +98,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Notification", b =>
@@ -166,7 +166,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Parts");
+                    b.ToTable("Parts", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.PartRequest", b =>
@@ -202,7 +202,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("PartId");
 
-                    b.ToTable("PartRequest");
+                    b.ToTable("PartRequests", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.PurchaseInvoice", b =>
@@ -216,10 +216,22 @@ namespace VehicleIMS.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("FinalTotal")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("InvoiceNumber")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -231,7 +243,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("PurchaseInvoice");
+                    b.ToTable("PurchaseInvoices", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.PurchaseInvoiceItem", b =>
@@ -260,7 +272,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseInvoiceId");
 
-                    b.ToTable("PurchaseInvoiceItem");
+                    b.ToTable("PurchaseInvoiceItems", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Review", b =>
@@ -294,7 +306,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("PartId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.SalesInvoice", b =>
@@ -311,10 +323,22 @@ namespace VehicleIMS.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("FinalTotal")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("InvoiceNumber")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -323,7 +347,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("SalesInvoice");
+                    b.ToTable("SalesInvoices", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.SalesInvoiceItem", b =>
@@ -352,7 +376,61 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("SalesInvoiceId");
 
-                    b.ToTable("SalesInvoiceItem");
+                    b.ToTable("SalesInvoiceItems", (string)null);
+                });
+
+            modelBuilder.Entity("VehicleIMS.Domain.Models.Staff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("JoinedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Staff", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.User", b =>
@@ -387,7 +465,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Vehicle", b =>
@@ -428,7 +506,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Vendor", b =>
@@ -466,7 +544,7 @@ namespace VehicleIMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vendors");
+                    b.ToTable("Vendors", (string)null);
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Appointment", b =>
@@ -613,6 +691,17 @@ namespace VehicleIMS.Infrastructure.Migrations
                     b.Navigation("Part");
 
                     b.Navigation("SalesInvoice");
+                });
+
+            modelBuilder.Entity("VehicleIMS.Domain.Models.Staff", b =>
+                {
+                    b.HasOne("VehicleIMS.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("VehicleIMS.Domain.Models.Vehicle", b =>
